@@ -5,25 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Info & Socials - Electrizied</title>
     <style>
-        :root { --light-blue: #E0FFFF; --dark-blue: #00008B; --background: #000212; --panel-bg: rgba(0, 5, 25, 0.7); --button-glow: rgba(224, 255, 255, 0.4); }
-        body { background-color: var(--background); color: #ddd; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; line-height: 1.6; }
-        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 1px), radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 1px); background-size: 550px 550px, 350px 350px; opacity: 0.5; z-index: -1; }
-        header { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background-color: rgba(0, 0, 18, 0.9); box-shadow: 0 2px 10px rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; }
+        :root { 
+            --light-blue: #E0FFFF; 
+            --dark-blue: #00008B; 
+            --background: #000212; 
+            --panel-bg: rgba(0, 5, 25, 0.7); 
+            --button-glow: rgba(224, 255, 255, 0.4); 
+            --transition-speed: 0.3s;
+        }
+
+        /* Page Load Animation */
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animated Drifting Background */
+        @keyframes driftStars {
+            0% { background-position: 0 0, 40px 60px, -200px 10%; }
+            100% { background-position: 550px 550px, 390px 410px, 150px 360px; }
+        }
+
+        body { 
+            background-color: var(--background); 
+            color: #ddd; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            animation: fadeInPage 1s ease-out; 
+            overflow-x: hidden;
+        }
+
+        body::before { 
+            content: ''; 
+            position: fixed; 
+            top: 0; left: 0; width: 100%; height: 100%; 
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 1px), 
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 1px), 
+                radial-gradient(rgba(173, 216, 230, 0.1), transparent 40%); 
+            background-size: 550px 550px, 350px 350px, 70% 70%; 
+            z-index: -1; 
+            opacity: 0.6; 
+            animation: driftStars 120s linear infinite; /* Moving starfield */
+        }
+
+        header { padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background-color: rgba(0, 0, 18, 0.9); box-shadow: 0 2px 10px rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
         .logo { font-size: 1.5em; font-weight: bold; color: #fff; text-transform: uppercase; letter-spacing: 2px; }
         nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 25px; }
-        nav a { text-decoration: none; color: #fff; text-transform: uppercase; font-weight: 500; transition: color 0.3s; }
+        nav a { text-decoration: none; color: #fff; text-transform: uppercase; font-weight: 500; transition: color var(--transition-speed); }
         nav a:hover { color: var(--light-blue); }
         
-        /* Guns.lol style profile card */
-        .bio-container { max-width: 500px; margin: 60px auto; padding: 40px 20px; background-color: var(--panel-bg); border: 1px solid rgba(224, 255, 255, 0.2); border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8); text-align: center; backdrop-filter: blur(10px); }
-        .pfp { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--light-blue); box-shadow: 0 0 20px var(--button-glow); margin-bottom: 20px; object-fit: cover; background: #000; }
+        /* Guns.lol style profile card with hover animation */
+        .bio-container { 
+            max-width: 500px; margin: 60px auto; padding: 40px 20px; 
+            background-color: var(--panel-bg); border: 1px solid rgba(224, 255, 255, 0.2); 
+            border-radius: 20px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8); 
+            text-align: center; backdrop-filter: blur(10px);
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+        
+        .bio-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(224, 255, 255, 0.1);
+        }
+
+        .pfp { width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--light-blue); box-shadow: 0 0 20px var(--button-glow); margin-bottom: 20px; object-fit: cover; background: #000; transition: transform 0.5s ease;}
+        .bio-container:hover .pfp { transform: scale(1.05) rotate(2deg); } /* Subtle PFP animation on card hover */
+
         .bio-name { font-size: 2.2em; font-weight: bold; margin: 0; background: linear-gradient(90deg, var(--light-blue) 0%, #fff 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .bio-desc { color: #aaa; margin-bottom: 30px; font-size: 1.1em; }
         
-        .link-btn { display: block; width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0, 0, 18, 0.8); border: 1px solid var(--dark-blue); border-radius: 10px; color: #fff; text-decoration: none; font-weight: bold; font-size: 1.1em; transition: all 0.3s ease; box-sizing: border-box; }
-        .link-btn:hover { background: linear-gradient(90deg, var(--dark-blue), var(--background)); border-color: var(--light-blue); transform: scale(1.02); box-shadow: 0 0 15px var(--button-glow); }
+        /* Animated Link Buttons */
+        .link-btn { 
+            display: block; width: 100%; padding: 15px; margin-bottom: 15px; 
+            background: rgba(0, 0, 18, 0.8); border: 1px solid var(--dark-blue); 
+            border-radius: 10px; color: #fff; text-decoration: none; font-weight: bold; 
+            font-size: 1.1em; transition: all var(--transition-speed) ease; box-sizing: border-box; 
+            position: relative; overflow: hidden;
+        }
         
-        .discord-box { background: rgba(88, 101, 242, 0.1); border: 1px solid #5865F2; padding: 15px; border-radius: 10px; margin-top: 30px; }
+        .link-btn:hover { 
+            background: linear-gradient(90deg, var(--dark-blue), var(--background)); 
+            border-color: var(--light-blue); 
+            transform: scale(1.03) translateY(-2px); 
+            box-shadow: 0 5px 15px var(--button-glow); 
+            z-index: 2;
+        }
+        
+        .discord-box { background: rgba(88, 101, 242, 0.1); border: 1px solid #5865F2; padding: 15px; border-radius: 10px; margin-top: 30px; transition: transform var(--transition-speed) ease; }
+        .discord-box:hover { transform: scale(1.02); background: rgba(88, 101, 242, 0.2); }
         .discord-box h3 { margin: 0 0 5px 0; color: #5865F2; }
         
         @media (max-width: 768px) { header { flex-direction: column; gap: 15px; } .bio-container { margin: 30px 15px; } }
